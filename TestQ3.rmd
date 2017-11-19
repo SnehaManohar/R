@@ -1,0 +1,81 @@
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+s <- transform(s, Sal_scale = as.factor(mapvalues(Sal,c(c(10000:25000),c(25001:50000),c(50001:56000)),c(rep(1,25000-10000+1),rep(2,50000-25001+1),rep(3,56000-50001+1)))))
+print(s)
+```
+```{r}
+r<-c(1:9)
+for (i in r)
+{
+  x<-s[i,]
+  print(x$Name)
+  print(identical(x$Paper,x$No_of_prog))
+          
+}
+```
+
+```{r}
+naming<-function(a)
+{
+    l<-c()
+    if(a>=5)
+      l<-"GOOD"
+    else if(a>=3)
+      l<-"ABV AVG"
+    else if(a>=2)
+      l<-"BEL AVG"
+    else 
+      l<-"START WORKING ON YOUR PAPER"
+  return (l) 
+}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+rows<-c(1:9)
+a<-c()
+for (i in rows)
+    a<-append(a,s[i,5])
+  print(a)
+  res<-sapply(a,FUN=naming)
+s<-transform(s,Comment_on_Paper=res)
+print(s)
+```
+
+```{r}
+naming<-function(a)
+{
+    l<-c()
+    if(a=="GOOD")
+      l<-"GOOD PERFORMER"
+    else if(a=="ABV AVG")
+      l<-"MODERATE"
+    else if(a=="BEL AVG")
+      l<-"NEED TO IMPORVE"
+    else 
+      l<-"YOUMAY BE FIRED"
+  return (l) 
+}
+
+a<-s[,7]
+  print(a)
+  a<-mapvalues(a,c(1,2,3,4),c("ABV AVG","BEL AVG","GOOD","START WORKING ON YOUR PAPER"))
+  print(a)
+  res<-sapply(a,FUN=naming)
+s<-transform(s,Action_Needed=res)
+print(s)
+```
+
+```{r}
+Giving_no<-function(a)
+  return(transform(s,Desig_No=as.factor(mapvalues(Desig,a,c(1:3)))))
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+rows<-c(1:9)
+a<-unique(s[,3])
+print(Giving_no(a))
+```
+
+```{r}
+
+cc<-rep('NULL',9)
+cc[c(2,3)]<-'character'
+s<-read.csv("F:/7th sem/Clas/R/fac.csv",colClasses = cc)
+print(s)
+```
