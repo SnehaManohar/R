@@ -1,0 +1,284 @@
+
+#####################################################################
+######################      QUESTION 2     ##########################
+#####################################################################
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+s$g1 = ""
+s$g2 = ""
+s$g3 = ""
+s$g4 = ""
+s$g5 = ""
+stud<-s
+
+r<-c(1:14)
+col<-c(4:8)
+for (i in r)
+{
+  for (j in col){  
+    
+    if (stud[i,j] >= 90){
+      stud[i,j+6] = 'S'
+    }
+    else if (stud[i,j] >= 75){
+      stud[i,j+6] = 'A'
+    }
+    else if (stud[i,j] >= 60){
+      stud[i,j+6] = 'B'
+    }
+    else if (stud[i,j] >= 45){
+      stud[i,j+6] = 'C'
+    }
+    else if (stud[i,j] >= 30){
+      stud[i,j+6] = 'D'
+    }
+    else
+      stud[i,j+6] = 'E'
+  }  
+  
+}
+print(stud)
+```
+```{r}
+r<-c(1:14)
+for (i in r)
+{
+  x<-stud[i,]
+  print(x$Names)
+  #print(identical(x$g1,x$g2,x$g3,x$g4,x$g5))
+  if(identical(x$g1,x$g2))
+    if(identical(x$g2,x$g3))
+      if(identical(x$g3,x$g4))
+        print(identical(x$g4,x$g5))
+          
+}
+```
+
+```{r}
+library(plyr)
+r<-c(1:14)
+col<-c(4:8)
+for (i in r)
+{
+  x<-c()
+  src<-c()
+  t1<-c()
+  t2<-c()
+  t3<-c()
+  t4<-c()
+  for (j in col){  
+    src<-c(src,stud[i,j])
+  }
+  c1 = 0
+  c2 = 0
+  c3 = 0
+  c4 = 0
+  for (j in col){  
+    if (stud[i,j] >=80 && stud[i,j]<=100){
+      t1<-c(t1,stud[i,j])
+      c1 = c1 + 1
+    }
+    else if (stud[i,j] >=60 && stud[i,j]<80){
+      t2<-c(t2,stud[i,j])
+      c2 = c2 + 1
+    }
+    else if (stud[i,j] >=40 && stud[i,j]<60){
+      t3<-c(t3,stud[i,j])
+      c3 = c3 + 1
+    }
+    else if (stud[i,j] >=0 && stud[i,j]<40){
+      t4<-c(t4,stud[i,j])
+      c4 = c4 + 1
+    }
+  }
+  #comments<-mapvalues(src,from = t1,to = rep("GOOD",c1))
+  #print(comments)
+  #comments<-mapvalues(src,from = t2,to = rep("MODERATE",c2))
+  #print(comments)
+  comments<-mapvalues(src,from = t3,to = rep("NEED IMPR",c3))
+  print(comments)
+  #comments<-mapvalues(src,from = t4,to = rep("POOR",c4))
+  #print(comments)
+}
+```
+```{r}
+library(plyr)
+r<-c(1:14)
+col<-c(10:14)
+for (i in r)
+{
+  x<-c()
+  src<-c()
+  t1<-c()
+  t2<-c()
+  t3<-c()
+  t4<-c()
+  for (j in col){  
+    src<-c(src,stud[i,j])
+  }
+  c1 = 0
+  c2 = 0
+  c3 = 0
+  c4 = 0
+  for (j in col){  
+    if (stud[i,j] == "S" || stud[i,j] == "A" ){
+      t1<-c(t1,stud[i,j])
+      c1 = c1 + 1
+    }
+    else if (stud[i,j] == "B" || stud[i,j] == "C" ){
+      t2<-c(t2,stud[i,j])
+      c2 = c2 + 1
+    }
+    else if (stud[i,j] == "D" || stud[i,j] == "E" ){
+      t3<-c(t3,stud[i,j])
+      c3 = c3 + 1
+    }
+    else if (stud[i,j] == "F"){
+      t4<-c(t4,stud[i,j])
+      c4 = c4 + 1
+    }
+  }
+  comments<-mapvalues(src,from = t1,to = rep("GOOD",c1))
+  print(comments)
+  #comments<-mapvalues(src,from = t2,to = rep("AVG",c2))
+  #print(comments)
+  #comments<-mapvalues(src,from = t3,to = rep("B AVG",c3))
+  #print(comments)
+  #comments<-mapvalues(src,from = t4,to = rep("POOR",c4))
+  #print(comments)
+}
+```
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+s <- transform(s, DeptNo = as.factor(mapvalues(Dept,c("CS","IS","EE","EC","ML","BT","CV","IT","SI"),c(1,2,3,4,5,6,7,8,9))))
+print(s)
+```
+
+```{r}
+cc<-rep('NULL',9)
+cc[c(1,2)]<-'character'
+df<-read.csv("F:/7th sem/Clas/R/coll.csv",colClasses = cc)
+print(df)
+```
+
+```{r}
+cc<-rep('NULL',9)
+cc[c(1:3)]<-'character'
+cc[c(4:9)]<-'integer'
+s<-read.csv("F:/7th sem/Clas/R/coll.csv",colClasses = cc)
+for (i in col)
+{
+  print(s[1,i])
+ 
+  print(typeof(s[1,i]))
+}
+```
+
+```{r}
+choose.cols<-function(l,h){
+  cc<-rep('NULL',9)
+  cc[c(l:h)]<-'character'
+  df<-read.csv("F:/7th sem/Clas/R/coll.csv",colClasses = cc)
+  df
+}
+choose.cols(1,5)
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+plot(s$Names,s$M2,type="h")
+```
+
+```{r}
+cc<-rep('NULL',9)
+cc[c(4:8)]<-'integer'
+s<-read.csv("F:/7th sem/Clas/R/coll.csv",colClasses = cc)
+rows<-c(1:14)
+naming<-function(a)
+{
+    l<-c()
+    if(a>=80)
+      l<-append(l,"GOOD")
+    else if(a>=60)
+      l<-append(l,"ABV AVG")
+    else if(a>=40)
+      l<-append(l,"BEL AVG")
+    else 
+      l<-append(l,"POOR")
+  print(l) 
+}
+for (i in rows)
+{
+  #l<-append(a,s[i,])
+  col<-c(1:5)
+  a<-c()
+  for (j in col)
+    a<-append(a,s[i,j])
+  print(a)
+  res<-sapply(a,FUN=naming)
+
+}
+
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+s$g1 = ""
+s$g2 = ""
+s$g3 = ""
+s$g4 = ""
+s$g5 = ""
+stud<-s
+
+r<-c(1:14)
+col<-c(4:8)
+for (i in r)
+{
+  for (j in col){  
+    
+    if (stud[i,j] >= 90){
+      stud[i,j+6] = 'S'
+    }
+    else if (stud[i,j] >= 75){
+      stud[i,j+6] = 'A'
+    }
+    else if (stud[i,j] >= 60){
+      stud[i,j+6] = 'B'
+    }
+    else if (stud[i,j] >= 45){
+      stud[i,j+6] = 'C'
+    }
+    else if (stud[i,j] >= 30){
+      stud[i,j+6] = 'D'
+    }
+    else
+      stud[i,j+6] = 'E'
+  }  
+  
+}
+#print(stud)
+naming<-function(a)
+{
+    l<-c()
+    if(a=="S" || a=="A")
+      l<-append(l,"GOOD")
+    else if(a=="B")
+      l<-append(l,"ABV AVG")
+    else if(a=="C")
+      l<-append(l,"BEL AVG")
+    else 
+      l<-append(l,"POOR")
+  print(l) 
+}
+
+rows<-c(1:14)
+for (i in rows){
+  col<-c(10:15)
+  a<-c()
+  for (j in col)
+    a<-append(a,stud[i,j])
+  print(a)
+  res<-sapply(a,FUN=naming)
+}
+```

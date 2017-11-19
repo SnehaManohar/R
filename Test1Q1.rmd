@@ -1,0 +1,212 @@
+#####################################################################
+######################      QUESTION 1     ##########################
+#####################################################################
+```{r}
+stud<-read.csv("F:/7th sem/Clas/R/coll.csv")
+d<-unique(stud$Dept)
+for (x in d)
+{
+  temp<-c()
+  print(x)
+  temp<-stud$Names[stud$Dept==x]
+  print(temp)
+}
+```
+```{r}
+for (x in d)
+{
+  temp1<-c()
+  temp2<-c()
+  temp3<-c()
+  temp4<-c()
+  temp5<-c()
+  print(paste("DEPARTMENT ",x))
+  temp1<-stud$Names[stud$Dept==x & (stud$M1>60 )]
+  temp2<-stud$Names[stud$Dept==x & (stud$M2>60 )]
+  temp3<-stud$Names[stud$Dept==x & (stud$M3>60 )]
+  temp4<-stud$Names[stud$Dept==x & (stud$M4>60 )]
+  temp5<-stud$Names[stud$Dept==x & (stud$M5>60 )]
+  print("M1")
+  print(temp1)
+  print("M2")
+  print(temp2)
+  print("M3")
+  print(temp3)
+  print("M4")
+  print(temp4)
+  print("M5")
+  print(temp5)
+  }
+
+```
+
+```{r}
+r<-c(1:14)
+for (i in r)
+  {
+ 
+  x <- stud[i,]
+  count = 0
+  if (x$M1 > 60)
+      count = count +1
+  if (x$M2 > 60)
+    count = count +1
+  if (x$M3 > 60)
+    count = count +1
+  if (x$M4 > 60)
+    count = count +1
+  if (x$M5 > 60)
+    count = count +1
+  if (count >=2)
+    print(paste("STUDENTS WITH ATLEAST 2 S",(x$Names)))
+}
+
+```
+
+```{r}
+for (x in d)
+{
+  temp<-c()
+  print(paste("DEPT ",x))
+  temp<-stud$Names[stud$Dept==x & (stud$SGPA>=8 )]
+  print(temp)
+}
+
+```
+
+```{r}
+teac<-read.csv("F:/7th sem/Clas/R/fac.csv")
+d<-unique(teac$Dept)
+for (x in d)
+{
+  temp<-c()
+  print(paste("DEPARTMENT ",x))
+  r<-c(1:9)
+  for (i in r)
+  {
+  y<-teac[i,]
+  if(y$Dept==x)
+    print(paste(y$Name,y$Desig,y$Sal,sep = " "))
+  }
+}
+```
+
+```{r}
+teac<-read.csv("F:/7th sem/Clas/R/fac.csv")
+d<-unique(teac$Dept)
+dest="Prof"
+for (x in d)
+{
+  temp<-c()
+  print(paste("DEPARTMENT ",x))
+  r<-c(1:9)
+  for (i in r)
+  {
+  y<-teac[i,]
+  if(y$Dept==x && y$Desig==dest)
+    print(paste(y$Name,y$Sal,sep = " "))
+  }
+}
+```
+
+```{r}
+d<-unique(teac$Dept)
+for (x in d)
+{
+  
+  print(x)
+  r<-c(1:9)
+  for (i in r)
+  {
+    y<-teac[i,]
+    if(y$Sal>=1.5 & (y$Desig=="Prof"||y$Desig=="Assi"||y$Desig=="Asso") & y$Dept==x)
+      print(y$Name)
+  }
+}
+```
+```{r}
+d<-unique(teac$Dept)
+for (x in d)
+{
+  sum = 0
+  print(x)
+  r<-c(1:9)
+  for (i in r)
+  {
+    y<-teac[i,]
+    if(y$Dept==x& y$Desig=="Prof")
+      sum= sum+y$Sal
+  }
+  print(sum)
+}
+```
+```{r}
+d<-unique(teac$Dept)
+for (x in d)
+{
+  sum = 0
+  print(x)
+  r<-c(1:9)
+  for (i in r)
+  {
+    y<-teac[i,]
+    if(y$Dept==x)
+      sum= sum+y$Sal
+  }
+  print(sum)
+}
+```
+```{r}
+d<-unique(teac$Dept)
+salaries<-c()
+
+for (x in d)
+{
+  sum = 0
+  count = 0
+  print(x)
+  r<-c(1:9)
+  for (i in r)
+  {
+    y<-teac[i,]
+    if(y$Dept==x){
+      sum= sum+y$Sal
+      count=count+1
+    }
+  }
+  val = sum/count
+  salaries<-c(salaries,val)
+  print(val)
+}
+```
+```{r}
+min_val = min(salaries)
+print(min_val)
+max_val = max(salaries)
+d<-unique(teac$Dept)
+
+
+for (x in d)
+{
+  sum = 0
+  count = 0
+  r<-c(1:9)
+  for (i in r)
+  {
+    y<-teac[i,]
+    if(y$Dept==x){
+      sum= sum+y$Sal
+      count=count+1
+    }
+  }
+  val = sum/count
+  if(val == min_val){
+    print("MIN")
+    print(x)
+  }
+  if(val == max_val){
+    print("MAX")
+    print(x)
+  }
+}
+```
