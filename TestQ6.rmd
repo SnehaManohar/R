@@ -1,0 +1,87 @@
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/messystudents.csv")
+colnames(s)<-c("Names","USN","Dept","M1","M2","M3","M4","M5","SGPA","Gender")
+M2<-s$M2
+s$M2<-gsub("[^0-9]","",M2)
+names<-s$Names
+s$Names<-gsub("[^A-Za-z]","",names)
+print(s)
+```
+
+```{r}
+M2<-s$M2
+s$M2<-as.numeric(gsub("[^0-9]","",M2))
+names<-s$Names
+names<-as.character(gsub("[^A-Za-z]","",names))
+s1<-transform(s,Names=names)
+print(s1)
+``` 
+
+```{r}
+table(s$Names,s$SGPA)
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/messystudents.csv")
+colnames(s)<-c("Names","USN","Dept","M1","M2","M3","M4","M5","SGPA","Gender")
+clean<-function(val){
+new_val<-as.numeric(gsub("[^0-9]","",val))
+print(new_val)
+return(new_val)
+}
+new_val=sapply(as.vector(s$M2), clean)
+s_new<-transform(s,M2=new_val)
+print(s_new)
+#print(S2)
+``` 
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/messystudents.csv")
+colnames(s)<-c("Names","USN","Dept","M1","M2","M3","M4","M5","SGPA","Gender")
+clean<-function(val){
+new_val<-as.numeric(gsub("[^0-9]","",val))
+print(new_val)
+return(new_val)
+}
+new_val=lapply(as.vector(s$M2), clean)
+new_val<-unlist(new_val)
+s_new<-transform(s,M2=new_val)
+print(s_new)
+#print(S2)
+``` 
+
+```{r}
+summary(s)
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/messystudents.csv")
+colnames(s)<-c("Names","USN","Dept","M1","M2","M3","M4","M5","SGPA","Gender")
+naming<-function(s){
+row<-c(1:14)
+cols<-c(1:10)
+new_name<-c()
+for(i in row){
+  if(s[i,10]=="M")
+  new_name<-append(new_name,paste("Mr",s[i,1]))
+   if(s[i,10]=="F")
+  new_name<-append(new_name,paste("Mrs",s[i,1]))
+}
+
+return (new_name)
+}
+
+s<-transform(s,Names=naming(s))
+print(s)
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/messystudents.csv")
+colnames(s)<-c("Names","USN","Dept","M1","M2","M3","M4","M5","SGPA","Gender")
+a<-unlist(s$M1)
+if(any(a<20)){
+    print("Some students failed")
+}else {
+    print("no one failed")
+}
+```
