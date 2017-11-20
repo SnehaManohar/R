@@ -1,0 +1,76 @@
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+ag<-aggregate(SGPA~Dept,s,mean)
+print(ag)
+with(ag,plot(Dept,SGPA,ylim=c(0,10)))
+```
+
+```{r}
+library('ggplot2')
+qplot(ag$Dept,ag$SGPA,xlab="Department",ylab="Average SGPA",colour='red')
+
+```
+
+```{r}
+ncol(s)
+nrow(s)
+```
+```{r}
+ggplot(data=ag,aes(x=Dept,y=SGPA))+geom_point()
+
+```
+
+```{r}
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_point(aes(size=4))
+
+```
+
+```{r}
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_point(colour="green")
+```
+
+```{r}
+cbpallete<-c('#E69F00','#E69F00','#F6B4E9','#009E73','#F0EE22','#E69F00','#F6B4E9','#009E73','#F0EE22','#F00000','#Eff000','#345670','#FFFF00','#098766')
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_point(colour=cbpallete)
+```
+
+```{r}
+
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_point()+facet_wrap(~Dept)
+```
+
+```{r}
+
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_point()+facet_grid(~Dept)
+```
+
+```{r}
+
+ggplot(data=s,aes(x=Dept,y=SGPA))+geom_bar(stat = "identity")
+```
+
+```{r}
+c9<-c("BT","CS","CV","EC","EE","IS","IT","ML")
+
+ggplot(data=ag,aes(x=Dept,y=SGPA,fill=c9))+geom_bar(stat = "identity")
+
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+ag<-aggregate(SGPA~Dept+M4,s,mean)
+ggplot(data=ag,aes(x=Dept,y=SGPA))+geom_line(size=2)+stat_smooth()
+```
+
+```{r}
+ggplot(data=ag,aes(x=Dept,y=SGPA))+geom_point()+ggtitle("Dept vs SGPA")+stat_summary(fun.data=mean_cl_normal)+geom_smooth(method='lm')
+
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/coll.csv")
+ag<-aggregate(SGPA~Dept+M2,s,mean)
+ggplot(data=ag,aes(x=Dept,y=SGPA))+geom_line(size=2)+geom_polygon(data=ag,aes(x=Dept,y=SGPA))
+#d=data.frame(x=c(1,2,2, 3,4,4), y=c(1,1,2, 2,2,3), t=c('a', 'a', 'a',  'b', 'b', 'b'), r=c(1,2,3, 4,5,6))
+#ggplot() +geom_polygon(data=d, mapping=aes(x=x, y=y, group=t)) +geom_point(data=d, aes(x=x, y=y, color=t))
+```

@@ -1,0 +1,131 @@
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+print(s)
+colnames(s)<-c("DEPT","NAME","DESIG","SAL","PAPER","NO_OF_PROG","GENDER")
+print(s)
+```
+
+```{r}
+library(plyr)
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+s <- transform(s, Desig = as.factor(mapvalues(Desig,c("Prof","Assoc","Assis"),c(1,2,3))))
+s <- transform(s, Gender = as.factor(mapvalues(Gender,c("M","F"),c(1,2))))
+print(s)
+```
+
+```{r}
+library(rmarkdown)
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+df<-with(s,tapply(s$Paper, s$Dept, mean))
+print(df)
+s <- transform(s, AVG_PAPER = as.factor(mapvalues(Dept,c("CH","CSE","EEE","ISE","ML"),c(df[1],df[2],df[3],df[4],df[5]))))
+kable(s,"markdown")
+df<-with(s,tapply(s$No_of_prog,s$Dept,FUN=mean))
+print(df)
+s <- transform(s, AVG_No_of_prog = as.factor(mapvalues(Dept,c("CH","CSE","EEE","ISE","ML"),c(df[1],df[2],df[3],df[4],df[5]))))
+kable(s,"markdown")
+
+#library(knitr)
+#library(rmarkdown)
+#kable(with(f,tapply(s$No_of_prog, INDEX=list(s$Dept,s$Paper),FUN=mean)),format="markdown")
+
+
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+df<-with(s,aggregate(Paper~Dept, data = s, mean))
+print(df)
+df<-with(s,aggregate(Paper~No_of_prog, data = s, mean))
+print(df)
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+df<-lm(aggregate(Paper~Desig, data = s, mean),s)
+print(df)
+df<-lm(aggregate(Paper~No_of_prog, data = s, mean),s)
+print(df)
+
+#aggregate(Papers~Trainings+Desig,FUN=mean, data=f)
+```
+
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+t<-with(s,table(Paper,Desig))
+print(t)
+```
+
+```{r}
+odds=t[1,2]/t[2,2]/t[2,3]/t[3,2]/t[4,1]/t[5,1]/t[6,2]/t[7,3]
+print(odds)
+```
+
+```{r}
+library(plyr)
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+s <- transform(s, Desig = as.factor(mapvalues(Desig,c("Prof","Assoc","Assis"),c(1,2,3))))
+d<-with(s,cor(s$Paper,as.numeric(s$Desig)))
+print(d)
+```
+
+```{r}
+library(plyr)
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+s <- transform(s, Desig = as.factor(mapvalues(Desig,c("Prof","Assoc","Assis"),c(1,2,3))))
+
+with(s,cor(as.numeric(s$Desig),s$No_of_prog))
+```
+
+```{r}
+d<-with(s,cor(s$Paper,s$No_of_prog))
+print(d)
+```
+
+
+
+```{r}
+library(plyr)
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+#s <- transform(s, Desig = as.factor(mapvalues(Desig,c("Prof","Assoc","Assis"),c(1,2,3))))
+#s<-transform(s,Desig = as.numeric(Desig))
+by(data = s[c("No_of_prog","Paper")], 
+   INDICES = s["Desig"], 
+   FUN = function(x) {cor(x[,1], x[,2])})
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+ag<-aggregate(No_of_prog~Desig,s,mean)
+print(ag)
+with(ag,plot(Desig,No_of_prog,ylim=c(0,10)))
+```
+
+```{r}
+s<-read.csv("F:/7th sem/Clas/R/fac.csv")
+ag<-aggregate(Paper~Desig,s,mean)
+print(ag)
+with(ag,plot(Desig,Paper,ylim=c(0,10)))
+with(ag,plot(Desig,Paper,xlab="Desig",ylab="Papers Published",main="Papers Published vs Designation",col.lab="blue"))
+axis(1, labels = FALSE, col = "red")
+#axis(1,col.axis='blue')
+#legend(0,0,legend,fill="green",border="yellow")
+legend("bottomleft", "(x,y)", pch = 1, title = "Number")
+```
+
+```{r}
+par(mfrow = c(1,2))
+with(s, plot(x, y, 
+                   main = "Paper vs Designation", 
+                   xlab = "Designation", 
+                   ylab = "Papers",col="blue",
+                   type = "h"))
+
+```
+
+```{r}
+boxplot(x~y)
+
+```
+
